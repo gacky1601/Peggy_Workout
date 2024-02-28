@@ -17,7 +17,7 @@ function App() {
       .then(response => {
         setStations(response.data);
         if (!selectedStation && response.data.length > 0) {
-          setSelectedStation(response.data[0]);
+          setSelectedStation(response.data[100]);
         }
       })
       .catch(error => {
