@@ -4,7 +4,7 @@ import '@radix-ui/themes/styles.css';
 import axios from 'axios';
 import { Card, Text, Button, Select, Table, Box, Grid, Blockquote, Flex, Badge, Callout } from '@radix-ui/themes';
 
-const api_url="http://api.yupooooo.me:8080"
+const api_url="https://api.yupooooo.me:8080"
 
 function App() {
   const [data, setData] = useState([]);
