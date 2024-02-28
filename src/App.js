@@ -68,13 +68,13 @@ function App() {
 
         <h1>捷運即時到站資訊</h1>
 
-        <Grid columns="3" gap="3" width="auto">
+        <Grid columns="1" gap="1" width="auto">
           <Box height="200">
 
           </Box>
 
           <Box height="200">
-            <Grid columns="3" gap="3" width="auto">
+            <Grid columns="1" gap="1" width="auto">
               <Text>選擇車站：</Text>
 
               <Select.Root onValueChange={handleStationChange} value={selectedStation} >
