@@ -31,7 +31,7 @@ function App() {
 
     return () => clearInterval(intervalId);
 
-  }, [selectedRoute,selectedStation]);
+  }, [selectedRoute, selectedStation, location]);
 
 
   const requestLocationPermission = () => {
