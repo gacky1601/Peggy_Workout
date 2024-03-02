@@ -120,16 +120,19 @@ function App() {
 
 
         <Grid columns="1" gap="5" style={{ width: '100%', margin: '0 auto' }}>
-          <Grid columns="7" gap="5" style={{ width: '80%', margin: '0 auto' }}>
+          <Grid columns="7" gap="5" style={{ width: '80%', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
             <Button size="2" color='red' onClick={() => handleRouteChange('r')}>R</Button>
             <Button size="2" color='blue' onClick={() => handleRouteChange('bl')}>BL</Button>
             <Button size="2" color='green' onClick={() => handleRouteChange('g')}>G</Button>
             <Button size="2" color='orange' onClick={() => handleRouteChange('o')}>O</Button>
             <Button size="2" color='brown' onClick={() => handleRouteChange('br')}>BR</Button>
+          </Grid>
+          <Grid columns="2" gap="5" style={{ width: '80%', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
             <Button onClick={fetchData}> <UpdateIcon></UpdateIcon> </Button>
             <Button onClick={requestLocationPermission} color='yellow'> <RadiobuttonIcon> </RadiobuttonIcon></Button>
           </Grid>
         </Grid>
+
 
         <p></p>
 
@@ -153,7 +156,7 @@ function App() {
           ))}
         </Grid>
 
-
+        <p></p>
 
         <Grid columns="1" gap="5" style={{ width: '100%', margin: '0 auto' }}>
           <Grid columns="3" gap="4" style={{ width: '80%', margin: '0 auto' }}>
@@ -161,7 +164,6 @@ function App() {
               <Flex gap="2">
                 <Badge color="red">即將進站</Badge>
                 <Badge color="blue">尚未到站</Badge>
-                <Badge color="green">離站</Badge>
               </Flex>
             </Blockquote>
           </Grid>
