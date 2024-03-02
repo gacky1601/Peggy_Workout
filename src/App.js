@@ -157,6 +157,9 @@ function App() {
               <Card
                 asChild
                 className={`card-max ${item.CountDown === "列車進站" ? "card-train-approaching" : ""}`}
+                style={{
+                  background: item.CountDown == "列車進站" ? "rgba(160, 0, 0, 0.2)" : "",
+                }}
                 key={index}
               >
                 <a href="#">
