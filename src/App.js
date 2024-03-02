@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import '@radix-ui/themes/styles.css';
 import axios from 'axios';
 import { Card, Text, Button, Select, Table, Box, Grid, Blockquote, Flex, Badge, Callout } from '@radix-ui/themes';
-import { UpdateIcon,  RadiobuttonIcon} from '@radix-ui/react-icons'
+import { UpdateIcon, RadiobuttonIcon } from '@radix-ui/react-icons'
 
 
 const api_url = "https://api.yupooooo.me"
@@ -12,7 +12,7 @@ function App() {
   const [realtime_data, setRealTimeData] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
-  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '');
+  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.0466569,121.5231783')
 
 
@@ -60,15 +60,15 @@ function App() {
           // On success, do something with the obtained position
           console.log("Latitude: ", position.coords.latitude);
           console.log("Longitude: ", position.coords.longitude);
-          
+
           setlocation(`${position.coords.latitude},${position.coords.longitude}`);
           axios.get(`${api_url}/api/location/${encodeURIComponent(location)}`)
-          .then(response => {
-            handleStationChange(response.data);
-          })
-          .catch(error => {
-            console.log('Error fetching data:', error);
-          });
+            .then(response => {
+              handleStationChange(response.data);
+            })
+            .catch(error => {
+              console.log('Error fetching data:', error);
+            });
         },
         (error) => {
           // Handle error or denial
@@ -169,7 +169,13 @@ function App() {
           <Grid columns="2" gap="4" style={{ width: '80%', margin: '0 auto' }}>
 
             {realtime_data.map((item, index) => (
-              <Card asChild style={{ maxWidth: 350 }}>
+              <Card asChild
+                style={{
+                  maxWidth: 350,
+                  background: item.CountDown == "列車進站" ? "rgba(200, 0, 0, 0.3)" : "",
+
+                }}
+              >
                 <a href="#">
                   <Text as="div" size="3" weight="bold">
                     往：{item.DestinationName}
