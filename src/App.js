@@ -1,9 +1,9 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import '@radix-ui/themes/styles.css';
+
 import axios from 'axios';
-import { Card, Text, Button, Select, Table, Box, Grid, Blockquote, Flex, Badge, Callout } from '@radix-ui/themes';
-import { UpdateIcon, Crosshair2Icon } from '@radix-ui/react-icons'
+import { Card, Text, Button, Grid, Blockquote, Flex, Badge, ThemePanel } from '@radix-ui/themes';
+import { UpdateIcon, Crosshair2Icon, InfoCircledIcon } from '@radix-ui/react-icons'
 import * as stationConfigs from './stationsConfig';
 const api_url = "https://api.yupooooo.me"
 
@@ -13,6 +13,7 @@ function App() {
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
   const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.046255,121.517532')
+  const [panel, setPanel] = useState([false]);
   const stationMap = {
     r: stationConfigs.r,
     bl: stationConfigs.bl,
@@ -112,6 +113,7 @@ function App() {
       <div className='New'>
         <h1> </h1>
         <p></p>
+        {panel && <ThemePanel />}
         <Grid gap="4" className="grid-full">
           <Grid columns="5" gap="2" className="grid-80-center">
             <Button className="button-nowrap" color='red' onClick={() => handleRouteChange('r')}>R</Button>
@@ -120,9 +122,11 @@ function App() {
             <Button className="button-nowrap" color='orange' onClick={() => handleRouteChange('o')}>O</Button>
             <Button className="button-nowrap" color='brown' onClick={() => handleRouteChange('br')}>BR</Button>
           </Grid>
-          <Grid columns="2" gap="2" className="grid-80-center">
+          <Grid columns="3" gap="2" className="grid-80-center">
+            <Button onClick={() => setPanel(!panel)}><InfoCircledIcon></InfoCircledIcon> </Button>
             <Button onClick={fetchData} color='iris'> <UpdateIcon></UpdateIcon> </Button>
             <Button onClick={requestLocationPermission} color='gray'> <Crosshair2Icon> </Crosshair2Icon></Button>
+
           </Grid>
 
           <Grid columns="3" gap="2" className="grid-80-center">
@@ -153,7 +157,7 @@ function App() {
             {realtime_data.map((item, index) => (
               <Card
                 asChild
-                className={`card-max ${item.CountDown == "列車進站" ? "card-train-approaching" : ""}`}
+                className={`card-max ${item.CountDown === "列車進站" ? "card-train-approaching" : ""}`}
                 key={index}
               >
                 <a href="#">
