@@ -14,6 +14,15 @@ function App() {
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
   const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.0466569,121.5231783')
+  const bl = ['頂埔', '永寧', '土城', '海山', '亞東醫院', '府中', '板橋', '新埔', '江子翠', '龍山寺', '西門', '台北車站', '善導寺', '忠孝新生', '忠孝復興', '忠孝敦化', '國父紀念館', '市政府', '永春', '後山埤', '昆陽', '南港', '南港展覽館'];
+
+  const r = ['動物園', '木柵', '萬芳社區', '萬芳醫院', '辛亥', '麟光', '六張犁', '科技大樓', '大安', '忠孝復興', '南京復興', '中山國中', '松山機場', '大直', '劍南路', '西湖', '港墘', '文德', '內湖', '大湖公園', '葫洲', '東湖', '南港軟體園區', '南港展覽館', '象山', '台北101/世貿', '信義安和', '大安森林公園', '東門', '中正紀念堂', '台大醫院', '台北車站', '中山', '雙連', '民權西路', '圓山', '劍潭', '士林', '芝山', '明德', '石牌', '唭哩岸', '奇岩', '北投', '復興崗', '忠義', '關渡', '竹圍', '紅樹林', '淡水'];
+
+  const o = ['南勢角', '景安', '永安市場', '頂溪', '古亭', '東門', '忠孝新生', '松江南京', '行天宮', '中山國小', '民權西路', '大橋頭', '台北橋', '菜寮', '三重', '先嗇宮', '頭前庄', '新莊', '輔大', '丹鳳', '迴龍'];
+
+  const br = ['動物園', '木柵', '萬芳社區', '萬芳醫院', '辛亥', '麟光', '六張犁', '科技大樓', '大安', '忠孝復興', '南京復興', '中山國中', '松山機場', '大直', '劍南路', '西湖', '港墘', '文德', '內湖', '大湖公園', '葫洲', '東湖', '南港軟體園區', '南港展覽館'];
+
+  const g = ['新店', '新店區公所', '七張', '大坪林', '景美', '萬隆', '公館', '台電大樓', '古亭', '中正紀念堂', '小南門', '西門', '北門', '中山', '松江南京', '南京復興', '台北小巨蛋', '南京三民', '松山'];
 
 
   useEffect(() => {
@@ -65,6 +74,21 @@ function App() {
           axios.get(`${api_url}/api/location/${encodeURIComponent(location)}`)
             .then(response => {
               handleStationChange(response.data);
+              if (bl.includes(response.data)) {
+                setSelectedRoute("bl");
+              }
+              else if(r.includes(response.data)){
+                setSelectedRoute("r");
+              }
+              else if(g.includes(response.data)){
+                setSelectedRoute("g");
+              }
+              else if(o.includes(response.data)){
+                setSelectedRoute("o");
+              }
+              else if(br.includes(response.data)){
+                setSelectedRoute("br");
+              }              
             })
             .catch(error => {
               console.log('Error fetching data:', error);
@@ -142,13 +166,14 @@ function App() {
               size="2"
               width="3"
               align="center"
+              color="brown"
               variant={station === selectedStation ? "surface" : "soft"}
               key={index}
               value={station}
               onClick={() => handleStationChange(station)}
               style={{
                 whiteSpace: 'nowrap', // Prevent text wrapping
-                fontSize: station.length > 4 ? '0.5rem' : '0.75rem' // Adjust font size based on text length
+                fontSize: station.length > 4 ? '0.65rem' : '0.75rem' // Adjust font size based on text length
               }}
             >
               {station}
@@ -163,7 +188,7 @@ function App() {
             <Blockquote size="4">
               <Flex gap="2">
                 <Badge color="red">即將進站</Badge>
-                <Badge color="blue">尚未到站</Badge>
+                <Badge color="gray">尚未到站</Badge>
               </Flex>
             </Blockquote>
           </Grid>
