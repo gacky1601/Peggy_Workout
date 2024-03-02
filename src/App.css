@@ -23,3 +23,38 @@
 .sel {
   margin-left: 10px;
 }
+
+/* Grid樣式 */
+.grid-full {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.grid-80-center {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Button樣式 */
+.button-nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  textOverflow: ellipsis;
+  fontSize: 0.75rem;
+  /* 預設大小，可以通過額外的類來覆蓋 */
+  maxWidth: 90%;
+  display: flex;
+  justifyContent: center;
+  alignItems: center;
+}
+
+/* Card樣式 */
+.card-max {
+  maxWidth: 350px;
+}
+
+.card-train-approaching {
+  background: rgba(200, 0, 0, 0.3);
+}
