@@ -175,7 +175,7 @@ function App() {
                 whiteSpace: 'nowrap', // Prevent text wrapping
                 overflow: 'hidden', // Prevent text from overflowing
                 textOverflow: 'ellipsis', // Add ellipsis if text overflows
-                fontSize: station.length > 5 ? '0.65rem' : '0.75rem', // Adjust font size based on text length
+                fontSize: station.length > 5 ? '0.6rem' : '0.75rem', // Adjust font size based on text length
                 maxWidth: '90%', // Ensure the button text does not exceed its container
                 display: 'flex', // Use flexbox for alignment
                 justifyContent: 'center', // Center the text horizontally
