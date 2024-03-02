@@ -157,8 +157,8 @@ function App() {
                 key={index}
               >
                 <a href="#">
-                  <Text as="div" size="3" weight="bold" style={{ maxWidth: "90%" }}>
-                    往：{item.DestinationName}
+                  <Text as="div" size="2" weight="bold" style={{ maxWidth: "90%" }}>
+                    往 {item.DestinationName}
                   </Text>
                   <Text as="div" color="gray" size="2">
                     {item.CountDown}
