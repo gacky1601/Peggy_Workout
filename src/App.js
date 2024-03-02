@@ -113,7 +113,7 @@ function App() {
       <div className='New'>
         <h1> </h1>
         <p></p>
-        {panel && <ThemePanel />}
+        {/* {panel && <ThemePanel />} */}
         <Grid gap="4" className="grid-full">
           <Grid columns="5" gap="2" className="grid-80-center">
             <Button className="button-nowrap" color='red' onClick={() => handleRouteChange('r')}>R</Button>
@@ -126,7 +126,6 @@ function App() {
             <Button onClick={() => setPanel(!panel)}><InfoCircledIcon></InfoCircledIcon> </Button>
             <Button onClick={fetchData} color='iris'> <UpdateIcon></UpdateIcon> </Button>
             <Button onClick={requestLocationPermission} color='gray'> <Crosshair2Icon> </Crosshair2Icon></Button>
-
           </Grid>
 
           <Grid columns="3" gap="2" className="grid-80-center">
