@@ -149,7 +149,7 @@ function App() {
             </Blockquote>
           </Grid>
 
-          <Grid columns="3" gap="2" className="grid-80-center">
+          <Grid columns="2" gap="2" className="grid-80-center">
             {realtime_data.map((item, index) => (
               <Card
                 asChild
@@ -157,7 +157,7 @@ function App() {
                 key={index}
               >
                 <a href="#">
-                  <Text as="div" size="2" weight="bold" style={{ maxWidth: "90%" }}>
+                  <Text as="div" size="2" weight="bold">
                     往 {item.DestinationName}
                   </Text>
                   <Text as="div" color="gray" size="2">
