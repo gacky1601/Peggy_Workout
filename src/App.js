@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import '@radix-ui/themes/styles.css';
 import axios from 'axios';
 import { Card, Text, Button, Select, Table, Box, Grid, Blockquote, Flex, Badge, Callout } from '@radix-ui/themes';
+import { UpdateIcon,  RadiobuttonIcon} from '@radix-ui/react-icons'
+
 
 const api_url = "https://api.yupooooo.me"
 
@@ -11,11 +13,11 @@ function App() {
   const [stations, setStations] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
   const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '');
-  const [location, setlocation] = useState(localStorage.getItem('location') || 'aaa')
+  const [location, setlocation] = useState(localStorage.getItem('location') || '25.0466569,121.5231783')
 
 
   useEffect(() => {
-    requestLocationPermission();
+    // requestLocationPermission();
 
     axios.get(`${api_url}/api/route/${selectedRoute}`)
       .then(response => {
@@ -58,7 +60,15 @@ function App() {
           // On success, do something with the obtained position
           console.log("Latitude: ", position.coords.latitude);
           console.log("Longitude: ", position.coords.longitude);
-          setlocation(position.coords.latitude);
+          
+          setlocation(`${position.coords.latitude},${position.coords.longitude}`);
+          axios.get(`${api_url}/api/location/${encodeURIComponent(location)}`)
+          .then(response => {
+            handleStationChange(response.data);
+          })
+          .catch(error => {
+            console.log('Error fetching data:', error);
+          });
         },
         (error) => {
           // Handle error or denial
@@ -105,19 +115,19 @@ function App() {
       <div className='New'>
 
         <h1> </h1>
-        <Button onClick={requestLocationPermission}>Request Location</Button>
-        <p>{location}</p>
+        <p></p>
 
 
 
         <Grid columns="1" gap="5" style={{ width: '100%', margin: '0 auto' }}>
-          <Grid columns="6" gap="5" style={{ width: '80%', margin: '0 auto' }}>
+          <Grid columns="7" gap="5" style={{ width: '80%', margin: '0 auto' }}>
             <Button size="2" color='red' onClick={() => handleRouteChange('r')}>R</Button>
             <Button size="2" color='blue' onClick={() => handleRouteChange('bl')}>BL</Button>
             <Button size="2" color='green' onClick={() => handleRouteChange('g')}>G</Button>
             <Button size="2" color='orange' onClick={() => handleRouteChange('o')}>O</Button>
             <Button size="2" color='brown' onClick={() => handleRouteChange('br')}>BR</Button>
-            <Button onClick={fetchData}> 更新資料</Button>
+            <Button onClick={fetchData}> <UpdateIcon></UpdateIcon> </Button>
+            <Button onClick={requestLocationPermission} color='yellow'> <RadiobuttonIcon> </RadiobuttonIcon></Button>
           </Grid>
         </Grid>
 
