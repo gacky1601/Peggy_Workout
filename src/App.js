@@ -11,7 +11,7 @@ function App() {
   const [realtime_data, setRealTimeData] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
-  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站站');
+  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.046255,121.517532')
   const stationMap = {
     r: stationConfigs.r,
