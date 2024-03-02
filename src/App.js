@@ -77,18 +77,18 @@ function App() {
               if (bl.includes(response.data)) {
                 setSelectedRoute("bl");
               }
-              else if(r.includes(response.data)){
+              else if (r.includes(response.data)) {
                 setSelectedRoute("r");
               }
-              else if(g.includes(response.data)){
+              else if (g.includes(response.data)) {
                 setSelectedRoute("g");
               }
-              else if(o.includes(response.data)){
+              else if (o.includes(response.data)) {
                 setSelectedRoute("o");
               }
-              else if(br.includes(response.data)){
+              else if (br.includes(response.data)) {
                 setSelectedRoute("br");
-              }              
+              }
             })
             .catch(error => {
               console.log('Error fetching data:', error);
@@ -173,7 +173,13 @@ function App() {
               onClick={() => handleStationChange(station)}
               style={{
                 whiteSpace: 'nowrap', // Prevent text wrapping
-                fontSize: station.length > 4 ? '0.65rem' : '0.75rem' // Adjust font size based on text length
+                overflow: 'hidden', // Prevent text from overflowing
+                textOverflow: 'ellipsis', // Add ellipsis if text overflows
+                fontSize: station.length > 4 ? '0.70rem' : '0.75rem', // Adjust font size based on text length
+                maxWidth: '90%', // Ensure the button text does not exceed its container
+                display: 'flex', // Use flexbox for alignment
+                justifyContent: 'center', // Center the text horizontally
+                alignItems: 'center', // Center the text vertically
               }}
             >
               {station}
