@@ -59,6 +59,7 @@ function App() {
 
   const fetchRealTimeData = () => {
     fetchRealtimeData(selectedStation, setRealTimeData);
+    setCountdown(10);
   };
 
   return (
