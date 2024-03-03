@@ -160,27 +160,21 @@ function App() {
                   }}
                   key={index}
                 >
-                  <Flex gap="3" align="center" direction="row" width="100%">
-                    <Avatar
-                      size="3"
-                      src="https://static.vecteezy.com/system/resources/previews/019/494/034/original/train-icon-illustration-icon-related-to-transportation-tourism-travel-line-icon-style-simple-design-editable-vector.jpg"
-                      radius="full"
-                      fallback="T"
-                    />
-                    <Box>
-                      <Text as="div" size="2" weight="bold">
-                        往 {item.DestinationName}
-                      </Text>
-                    </Box>
-                    
-                    <Text as="div" align="right" size="2" color="gray">
+                  <Box>
+                    <Text as="div" size="2" weight="bold">
+                      往 {item.DestinationName.substring(0, item.DestinationName.length - 1)}
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Text as="div" size="2" color="gray">
                       {item.CountDown}
                     </Text>
                     <Text as="div" color="gray" size="2">
                       {item.TrainNumber}
                     </Text>
+                  </Box>
 
-                  </Flex>
+
                 </Card>
               ))
             }
