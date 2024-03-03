@@ -1,8 +1,8 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import axios from 'axios';
-import { Card, Text, Button, Grid, Blockquote, Flex, Badge, ThemePanel } from '@radix-ui/themes';
+import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Avatar } from '@radix-ui/themes';
 import { UpdateIcon, Crosshair2Icon, InfoCircledIcon } from '@radix-ui/react-icons'
 import * as stationConfigs from './stationsConfig';
 const api_url = "https://api.yupooooo.me"
@@ -13,7 +13,7 @@ function App() {
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
   const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.046255,121.517532')
-  const [panel, setPanel] = useState([false]);
+  const [panelVisibility, setPanel] = useState([false]);
   const stationMap = {
     r: stationConfigs.r,
     bl: stationConfigs.bl,
@@ -24,8 +24,8 @@ function App() {
 
   useEffect(() => {
     setStations(stationMap[selectedRoute] || []);
-
     fetchData();
+
     const intervalId = setInterval(() => {
       fetchData();
     }, 100000);
@@ -81,7 +81,7 @@ function App() {
       );
     } else {
       // Geolocation is not supported
-      console.error("Geolocation is not supported by this browser.");
+      alert("Geolocation is not supported by this browser.");
     }
   };
 
@@ -101,7 +101,6 @@ function App() {
     axios.get(`${api_url}/api/metro/${encodeURIComponent(selectedStation)}`)
       .then(response => {
         setRealTimeData(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.log('Error fetching data:', error);
@@ -123,7 +122,7 @@ function App() {
             <Button className="button-nowrap" color='brown' onClick={() => handleRouteChange('br')}>BR</Button>
           </Grid>
           <Grid columns="3" gap="2" className="grid-80-center">
-            <Button onClick={() => setPanel(!panel)}><InfoCircledIcon></InfoCircledIcon> </Button>
+            <Button onClick={() => setPanel(!panelVisibility)}><InfoCircledIcon></InfoCircledIcon> </Button>
             <Button onClick={fetchData} color='iris'> <UpdateIcon></UpdateIcon> </Button>
             <Button onClick={requestLocationPermission} color='gray'> <Crosshair2Icon> </Crosshair2Icon></Button>
           </Grid>
@@ -153,30 +152,42 @@ function App() {
           </Grid>
 
           <Grid columns="2" gap="2" className="grid-80-center">
-            {realtime_data.map((item, index) => (
-              <Card
-                asChild
-                className={`card-max ${item.CountDown === "列車進站" ? "card-train-approaching" : ""}`}
-                style={{
-                  background: item.CountDown == "列車進站" ? "rgba(160, 0, 0, 0.2)" : "",
-                }}
-                key={index}
-              >
-                <a href="#">
-                  <Text as="div" size="2" weight="bold">
-                    往 {item.DestinationName}
-                  </Text>
-                  <Text as="div" color="gray" size="2">
-                    {item.CountDown}
-                  </Text>
-                  <Text as="div" color="gray" size="2">
-                    {item.TrainNumber}
-                  </Text>
-                </a>
-              </Card>
-            ))}
+            {
+              realtime_data.map((item, index) => (
+                <Card
+                  style={{
+                    background: item.CountDown === "列車進站" ? "rgba(160, 0, 0, 0.2)" : "",
+                  }}
+                  key={index}
+                >
+                  <Flex gap="3" align="center" direction="row" width="100%">
+                    <Avatar
+                      size="3"
+                      src="https://static.vecteezy.com/system/resources/previews/019/494/034/original/train-icon-illustration-icon-related-to-transportation-tourism-travel-line-icon-style-simple-design-editable-vector.jpg"
+                      radius="full"
+                      fallback="T"
+                    />
+                    <Box>
+                      <Text as="div" size="2" weight="bold">
+                        往 {item.DestinationName}
+                      </Text>
+                    </Box>
+                    
+                    <Text as="div" align="right" size="2" color="gray">
+                      {item.CountDown}
+                    </Text>
+                    <Text as="div" color="gray" size="2">
+                      {item.TrainNumber}
+                    </Text>
+
+                  </Flex>
+                </Card>
+              ))
+            }
           </Grid>
         </Grid>
+
+
 
       </div>
     </div >
