@@ -74,12 +74,12 @@ function App() {
             fallback="T"
           /> 小豬出行</Text>
           <Grid columns="6" gap="2" className="grid-80-center">
-            <Button className="button-nowrap" color='red' onClick={() => handleRouteChange('Red')}>R</Button>
-            <Button className="button-nowrap" color='blue' onClick={() => handleRouteChange('Blue')}>BL</Button>
-            <Button className="button-nowrap" color='green' onClick={() => handleRouteChange('Green')}>G</Button>
-            <Button className="button-nowrap" color='orange' onClick={() => handleRouteChange('Orange')}>O</Button>
-            <Button className="button-nowrap" color='brown' onClick={() => handleRouteChange('Brown')}>BR</Button>
-            <Button className="button-nowrap" color='yellow' onClick={() => handleRouteChange('Yellow')}>Y</Button>
+            <Button className="button-nowrap" color='red' variant={"Red" === selectedRoute && panelVisibility ? "outline" : "classic"} onClick={() => handleRouteChange('Red')}>R</Button>
+            <Button className="button-nowrap" color='blue' variant={"Blue" === selectedRoute && panelVisibility ? "outline" : "classic"} onClick={() => handleRouteChange('Blue')}>BL</Button>
+            <Button className="button-nowrap" color='green' variant={"Green" === selectedRoute && panelVisibility ? "outline" : "classic"} onClick={() => handleRouteChange('Green')}>G</Button>
+            <Button className="button-nowrap" color='orange' variant={"Orange" === selectedRoute && panelVisibility ? "outline" : "classic"} onClick={() => handleRouteChange('Orange')}>O</Button>
+            <Button className="button-nowrap" color='brown' variant={"Brown" === selectedRoute && panelVisibility ? "outline" : "classic"} onClick={() => handleRouteChange('Brown')}>BR</Button>
+            <Button className="button-nowrap" color='yellow' variant={"Yellow" === selectedRoute && panelVisibility ? "outline" : "classic"} onClick={() => handleRouteChange('Yellow')}>Y</Button>
           </Grid>
           <Grid columns="3" gap="2" className="grid-80-center">
             <Button onClick={() => setPanel(!panelVisibility)}>
@@ -92,7 +92,7 @@ function App() {
           {panelVisibility && <Grid columns="3" gap="2" className="grid-80-center">
             {stations.map((station, index) => (
               <Button
-                className={`button-nowrap ${station === selectedStation ? "surface" : "soft"}`}
+                className={`button-nowrap`}
                 color="brown"
                 variant={station === selectedStation ? "surface" : "soft"}
                 key={index}
