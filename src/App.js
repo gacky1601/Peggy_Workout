@@ -10,18 +10,19 @@ const api_url = "https://api.yupooooo.me"
 function App() {
   const [realtime_data, setRealTimeData] = useState([]);
   const [stations, setStations] = useState([]);
-  const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'r');
+  const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'Red');
   const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.046255,121.517532')
   const [panelVisibility, setPanel] = useState([false]);
   const [countdown, setCountdown] = useState(10);
 
   const stationMap = {
-    r: stationConfigs.r,
-    bl: stationConfigs.bl,
-    g: stationConfigs.g,
-    o: stationConfigs.o,
-    br: stationConfigs.br,
+    Red: stationConfigs.RedLine,
+    Blue: stationConfigs.BlueLine,
+    Green: stationConfigs.GreenLine,
+    Orange: stationConfigs.OrangeLine,
+    Brown: stationConfigs.BrownLine,
+    Yellow: stationConfigs.YellowLine
   };
 
   useEffect(() => {
@@ -62,17 +63,18 @@ function App() {
   return (
     <div className="App h-screen flex justify-center items-center">
       <div className='New'>
-        
+
         <h1> </h1>
         <p></p>
         {/* {panel && <ThemePanel />} */}
         <Grid gap="4" className="grid-full">
-          <Grid columns="5" gap="2" className="grid-80-center">
-            <Button className="button-nowrap" color='red' onClick={() => handleRouteChange('r')}>R</Button>
-            <Button className="button-nowrap" color='blue' onClick={() => handleRouteChange('bl')}>BL</Button>
-            <Button className="button-nowrap" color='green' onClick={() => handleRouteChange('g')}>G</Button>
-            <Button className="button-nowrap" color='orange' onClick={() => handleRouteChange('o')}>O</Button>
-            <Button className="button-nowrap" color='brown' onClick={() => handleRouteChange('br')}>BR</Button>
+          <Grid columns="6" gap="2" className="grid-80-center">
+            <Button className="button-nowrap" color='red' onClick={() => handleRouteChange('Red')}>R</Button>
+            <Button className="button-nowrap" color='blue' onClick={() => handleRouteChange('Blue')}>BL</Button>
+            <Button className="button-nowrap" color='green' onClick={() => handleRouteChange('Green')}>G</Button>
+            <Button className="button-nowrap" color='orange' onClick={() => handleRouteChange('Orange')}>O</Button>
+            <Button className="button-nowrap" color='brown' onClick={() => handleRouteChange('Brown')}>BR</Button>
+            <Button className="button-nowrap" color='yellow' onClick={() => handleRouteChange('Yellow')}>Y</Button>
           </Grid>
           <Grid columns="3" gap="2" className="grid-80-center">
             <Button onClick={() => setPanel(!panelVisibility)}><InfoCircledIcon></InfoCircledIcon> </Button>

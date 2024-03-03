@@ -14,19 +14,19 @@ export const fetchRealtimeData = (value, setRealTimeData) => {
 };
 
 export const findStationRoute = (stationName) => {
-    if (stationConfigs.bl.includes(stationName)) {
+    if (stationConfigs.BlueLine.includes(stationName)) {
         return "bl"
     }
-    else if (stationConfigs.r.includes(stationName)) {
+    else if (stationConfigs.RedLine.includes(stationName)) {
         return "r";
     }
-    else if (stationConfigs.g.includes(stationName)) {
+    else if (stationConfigs.GreenLine.includes(stationName)) {
         return "g";
     }
-    else if (stationConfigs.o.includes(stationName)) {
+    else if (stationConfigs.OrangeLine.includes(stationName)) {
         return "o";
     }
-    else if (stationConfigs.br.includes(stationName)) {
+    else if (stationConfigs.BrownLine.includes(stationName)) {
         return "br";
     }
 }
