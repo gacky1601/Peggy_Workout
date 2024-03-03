@@ -1,10 +1,10 @@
 import './App.css';
 import React, { useState, useEffect, useCallback } from 'react';
 
-import axios from 'axios';
 import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Avatar } from '@radix-ui/themes';
 import { UpdateIcon, Crosshair2Icon, InfoCircledIcon } from '@radix-ui/react-icons'
 import * as stationConfigs from './stationsConfig';
+import { fetchRealtimeData, requestLocationPermission } from './utils';
 const api_url = "https://api.yupooooo.me"
 
 function App() {
@@ -14,6 +14,8 @@ function App() {
   const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站');
   const [location, setlocation] = useState(localStorage.getItem('location') || '25.046255,121.517532')
   const [panelVisibility, setPanel] = useState([false]);
+  const [countdown, setCountdown] = useState(10);
+
   const stationMap = {
     r: stationConfigs.r,
     bl: stationConfigs.bl,
@@ -24,68 +26,25 @@ function App() {
 
   useEffect(() => {
     setStations(stationMap[selectedRoute] || []);
-    fetchData();
+    fetchRealTimeData();
 
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 100000);
-
-    return () => clearInterval(intervalId);
+    const timerId = setInterval(() => {
+      setCountdown((prevCountdown) => {
+        if (prevCountdown <= 1) {
+          fetchRealTimeData();
+          return 10;
+        }
+        return prevCountdown - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timerId);
 
   }, [selectedRoute, selectedStation, location]);
 
 
-  const requestLocationPermission = () => {
-    if ("geolocation" in navigator) {
-      // Check if geolocation is supported/enabled on the current device
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          // On success, do something with the obtained position
-          console.log("Latitude: ", position.coords.latitude);
-          console.log("Longitude: ", position.coords.longitude);
-
-          setlocation(`${position.coords.latitude},${position.coords.longitude}`);
-          axios.get(`${api_url}/api/location/${encodeURIComponent(location)}`)
-            .then(response => {
-              handleStationChange(response.data);
-              if (stationMap.bl.includes(response.data)) {
-                setSelectedRoute("bl");
-              }
-              else if (stationMap.r.includes(response.data)) {
-                setSelectedRoute("r");
-              }
-              else if (stationMap.g.includes(response.data)) {
-                setSelectedRoute("g");
-              }
-              else if (stationMap.o.includes(response.data)) {
-                setSelectedRoute("o");
-              }
-              else if (stationMap.br.includes(response.data)) {
-                setSelectedRoute("br");
-              }
-            })
-            .catch(error => {
-              console.log('Error fetching data:', error);
-            });
-        },
-        (error) => {
-          // Handle error or denial
-          console.error("Error obtaining location: ", error.message);
-        },
-        {
-          // Optional: Configuration object for the location request
-          enableHighAccuracy: true, // Provides a hint that the application needs the best possible results
-          timeout: 5000, // Amount of time before the error callback is invoked, if 0 it will never invoke.
-          maximumAge: 0 // Maximum cached position age.
-        }
-      );
-    } else {
-      // Geolocation is not supported
-      alert("Geolocation is not supported by this browser.");
-    }
+  const refreshLocation = () => {
+    requestLocationPermission(handleStationChange, handleRouteChange, setlocation, location);
   };
-
-
   const handleStationChange = (newValue) => {
     setSelectedStation(newValue);
     localStorage.setItem('selectedStation', newValue);
@@ -96,20 +55,14 @@ function App() {
     localStorage.setItem('selectedRoute', newValue);
   };
 
-  const fetchData = () => {
-    if (!selectedStation) return;
-    axios.get(`${api_url}/api/metro/${encodeURIComponent(selectedStation)}`)
-      .then(response => {
-        setRealTimeData(response.data);
-      })
-      .catch(error => {
-        console.log('Error fetching data:', error);
-      });
+  const fetchRealTimeData = () => {
+    fetchRealtimeData(selectedStation, setRealTimeData);
   };
 
   return (
     <div className="App h-screen flex justify-center items-center">
       <div className='New'>
+        
         <h1> </h1>
         <p></p>
         {/* {panel && <ThemePanel />} */}
@@ -123,8 +76,8 @@ function App() {
           </Grid>
           <Grid columns="3" gap="2" className="grid-80-center">
             <Button onClick={() => setPanel(!panelVisibility)}><InfoCircledIcon></InfoCircledIcon> </Button>
-            <Button onClick={fetchData} color='iris'> <UpdateIcon></UpdateIcon> </Button>
-            <Button onClick={requestLocationPermission} color='gray'> <Crosshair2Icon> </Crosshair2Icon></Button>
+            <Button onClick={fetchRealTimeData} color='iris'> <UpdateIcon></UpdateIcon> </Button>
+            <Button onClick={refreshLocation} color='gray'> <Crosshair2Icon> </Crosshair2Icon></Button>
           </Grid>
 
           <Grid columns="3" gap="2" className="grid-80-center">
@@ -147,6 +100,7 @@ function App() {
               <Flex gap="2">
                 <Badge color="red">即將進站</Badge>
                 <Badge color="gray">尚未到站</Badge>
+                <Badge size="1">{countdown}</Badge>
               </Flex>
             </Blockquote>
           </Grid>
