@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Avatar } from '@radix-ui/themes';
+import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Avatar, Heading, IconButton } from '@radix-ui/themes';
 import { UpdateIcon, Crosshair2Icon, InfoCircledIcon } from '@radix-ui/react-icons'
 import * as stationConfigs from './stationsConfig';
 import { fetchRealtimeData, requestLocationPermission } from './utils';
@@ -63,11 +63,14 @@ function App() {
   return (
     <div className="App h-screen flex justify-center items-center">
       <div className='New'>
-
-        <h1> </h1>
-        <p></p>
-        {/* {panel && <ThemePanel />} */}
         <Grid gap="4" className="grid-full">
+          <Box color='white'> </Box>
+          <Text weight="bold"><Avatar
+            size="1"
+            src="https://mrt.yupooooo.me/logo512.png"
+            radius="full"
+            fallback="T"
+          /> 小豬出行</Text>
           <Grid columns="6" gap="2" className="grid-80-center">
             <Button className="button-nowrap" color='red' onClick={() => handleRouteChange('Red')}>R</Button>
             <Button className="button-nowrap" color='blue' onClick={() => handleRouteChange('Blue')}>BL</Button>
