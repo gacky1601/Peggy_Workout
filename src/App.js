@@ -1,8 +1,8 @@
 import './App.css';
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Avatar, Heading, IconButton } from '@radix-ui/themes';
-import { UpdateIcon, Crosshair2Icon, InfoCircledIcon } from '@radix-ui/react-icons'
+import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Avatar, Heading, IconButton, Callout } from '@radix-ui/themes';
+import { UpdateIcon, Crosshair2Icon, InfoCircledIcon, CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons'
 import * as stationConfigs from './stationsConfig';
 import { fetchRealtimeData, requestLocationPermission } from './utils';
 const api_url = "https://api.yupooooo.me"
@@ -52,6 +52,7 @@ function App() {
   };
 
   const handleRouteChange = (newValue) => {
+    setPanel(true);
     setSelectedRoute(newValue);
     localStorage.setItem('selectedRoute', newValue);
   };
@@ -80,12 +81,14 @@ function App() {
             <Button className="button-nowrap" color='yellow' onClick={() => handleRouteChange('Yellow')}>Y</Button>
           </Grid>
           <Grid columns="3" gap="2" className="grid-80-center">
-            <Button onClick={() => setPanel(!panelVisibility)}><InfoCircledIcon></InfoCircledIcon> </Button>
+            <Button onClick={() => setPanel(!panelVisibility)}>
+              {panelVisibility ? <CaretUpIcon></CaretUpIcon> : <CaretDownIcon></CaretDownIcon>}
+            </Button>
             <Button onClick={fetchRealTimeData} color='iris'> <UpdateIcon></UpdateIcon> </Button>
             <Button onClick={refreshLocation} color='gray'> <Crosshair2Icon> </Crosshair2Icon></Button>
           </Grid>
 
-          <Grid columns="3" gap="2" className="grid-80-center">
+          {panelVisibility && <Grid columns="3" gap="2" className="grid-80-center">
             {stations.map((station, index) => (
               <Button
                 className={`button-nowrap ${station === selectedStation ? "surface" : "soft"}`}
@@ -98,7 +101,7 @@ function App() {
                 {station}
               </Button>
             ))}
-          </Grid>
+          </Grid>}
 
           <Grid className="grid-80-center">
             <Blockquote size="4">
@@ -108,6 +111,16 @@ function App() {
                 <Badge size="1">{countdown}</Badge>
               </Flex>
             </Blockquote>
+          </Grid>
+          <Grid columns="1" gap="2" className="grid-80-center">
+            <Callout.Root>
+              <Callout.Icon>
+                <InfoCircledIcon />
+              </Callout.Icon>
+              <Callout.Text>
+                {selectedStation}
+              </Callout.Text>
+            </Callout.Root>
           </Grid>
 
           <Grid columns="2" gap="2" className="grid-80-center">
@@ -132,12 +145,11 @@ function App() {
                       {item.TrainNumber}
                     </Text>
                   </Box>
-
-
                 </Card>
               ))
             }
           </Grid>
+
         </Grid>
 
 
