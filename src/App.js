@@ -11,8 +11,8 @@ function App() {
   const [realtime_data, setRealTimeData] = useState([]);
   const [stations, setStations] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'Red');
-  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '台北車站');
-  const [location, setlocation] = useState(localStorage.getItem('location') || '25.046255,121.517532')
+  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '');
+  const [location, setlocation] = useState(localStorage.getItem('location') || '')
   const [panelVisibility, setPanel] = useState([false]);
   const [countdown, setCountdown] = useState(10);
 
@@ -40,21 +40,21 @@ function App() {
     }, 1000);
     return () => clearInterval(timerId);
 
-  }, [selectedRoute, selectedStation, location]);
+  }, [selectedRoute, selectedStation]);
 
 
   const refreshLocation = () => {
     requestLocationPermission(handleStationChange, handleRouteChange, setlocation, location);
   };
   const handleStationChange = (newValue) => {
-    setSelectedStation(newValue);
     localStorage.setItem('selectedStation', newValue);
+    setSelectedStation(newValue);
   };
 
   const handleRouteChange = (newValue) => {
+    localStorage.setItem('selectedRoute', newValue);
     setPanel(true);
     setSelectedRoute(newValue);
-    localStorage.setItem('selectedRoute', newValue);
   };
 
   const fetchRealTimeData = () => {
