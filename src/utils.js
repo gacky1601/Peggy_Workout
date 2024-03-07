@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as stationConfigs from "./stationsConfig.js"
 
-const api_url = "https://api.yupooooo.me"
+const api_url = "https://peggy-backend-7kg3x2vbyq-de.a.run.app/"
 export const fetchRealtimeData = (value, setRealTimeData) => {
     if (!value) return;
     axios.get(`${api_url}/api/metro/${encodeURIComponent(value)}`)

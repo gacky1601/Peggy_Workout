@@ -5,7 +5,7 @@ import { Card, Text, Button, Grid, Blockquote, Flex, Box, Badge, ThemePanel, Ava
 import { UpdateIcon, Crosshair2Icon, InfoCircledIcon, CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons'
 import * as stationConfigs from './stationsConfig';
 import { fetchRealtimeData, requestLocationPermission } from './utils';
-const api_url = "https://api.yupooooo.me"
+const api_url = "https://peggy-backend-7kg3x2vbyq-de.a.run.app/"
 
 function App() {
   const [realtime_data, setRealTimeData] = useState([]);
