@@ -4,6 +4,8 @@ import * as stationConfigs from "./stationsConfig.js"
 const api_url = "https://peggy-backend-7kg3x2vbyq-de.a.run.app/"
 export const fetchRealtimeData = (value, setRealTimeData) => {
     if (!value) return;
+    if(value=='台北101/世貿')
+        value='101';
     axios.get(`${api_url}/api/metro/${encodeURIComponent(value)}`)
         .then(response => {
             setRealTimeData(response.data);
