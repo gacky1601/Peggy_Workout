@@ -28,8 +28,8 @@ function App() {
       {/* Footer 固定在底部 */}
       <footer className="fixed bottom-0 w-full bg-white shadow-lg z-10">
         <Grid columns="2" gap="2" className="grid-80-center">
-          <Button onClick={() => setMode(true)} variant={Mode ? "outline" : "soft"} color='Teal'>Metro</Button>
-          <Button onClick={() => setMode(false)} variant={!Mode ? "outline" : "soft"} color='ruby'>Bus</Button>
+          <Button onClick={() => setMode(true)} variant={Mode ? "surface" : "soft"} color='Teal'>Metro</Button>
+          <Button onClick={() => setMode(false)} variant={!Mode ? "surface" : "soft"} color='ruby'>Bus</Button>
         </Grid>
       </footer>
     </div>

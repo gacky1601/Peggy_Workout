@@ -11,8 +11,8 @@ const api_url = "https://peggy-backend-7kg3x2vbyq-de.a.run.app/"
 export function Metro() {
   const [realtime_data, setRealTimeData] = useState([]);
   const [stations, setStations] = useState([]);
-  const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'Red');
-  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '');
+  const [selectedRoute, setSelectedRoute] = useState(localStorage.getItem('selectedRoute') || 'Blue');
+  const [selectedStation, setSelectedStation] = useState(localStorage.getItem('selectedStation') || '忠孝新生');
   const [location, setlocation] = useState(localStorage.getItem('location') || '')
   const [panelVisibility, setPanel] = useState([false]);
   const [countdown, setCountdown] = useState(10);
