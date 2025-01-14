@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Text, Button, Grid, TextField, Callout, IconButton, Box } from '@radix-ui/themes';
+import { Card, Text, Button, Grid, TextField, Callout, IconButton, Box, Flex } from '@radix-ui/themes';
 import { MagnifyingGlassIcon, InfoCircledIcon, UpdateIcon } from '@radix-ui/react-icons'
 import { BrandHeader } from './Header.js';
 
@@ -16,9 +16,9 @@ export function Bus() {
     const [busDepart, setDepart] = useState([]);
     const [busDest, setDest] = useState([]);
 
-      useEffect(() => {
+    useEffect(() => {
         fetchBusData(579, setRealTimeBusData)
-      }, []);
+    }, []);
 
 
 
@@ -32,15 +32,14 @@ export function Bus() {
             </div> */}
             <Grid gap="3">
                 <Grid columns="3" gap="3" className="grid-80-center">
-                    <Button onClick={() => setDirection(0)}>往</Button>
-                    <Button onClick={() => setDirection(1)}>返</Button>
-                    <Button onClick={() => fetchBusData(579, setRealTimeBusData)}>
-                        <UpdateIcon></UpdateIcon>
-                    </Button>
+                    {/* <Button onClick={() => setDirection(0)}>往</Button>
+                    <Button onClick={() => setDirection(1)}>返</Button> */}
+
                 </Grid>
 
                 <Grid columns="1" gap="3" className="grid-80-center">
-                    <TextField.Root>
+
+                    <TextField.Root >
                         <TextField.Slot>
                             <MagnifyingGlassIcon height="16" width="16" />
                         </TextField.Slot>
@@ -57,55 +56,73 @@ export function Bus() {
                             </IconButton>
                         </TextField.Slot>
                     </TextField.Root>
+
+
                 </Grid>
 
                 <Grid columns="1" gap="2" className="grid-80-center">
-                    <Callout.Root>
-                        <Callout.Icon>
-                            <InfoCircledIcon />
-                        </Callout.Icon>
-                        <Callout.Text>
-                            {busNumber}
-                        </Callout.Text>
-                    </Callout.Root>
+
+
+
+                    <Flex gap="3" width="100%">
+                        <Box width="90%" height="50px">
+                            <Callout.Root size="1" color='green' style={{ width: "100%", height: "30%" }}>
+                                <Callout.Icon>
+                                    <InfoCircledIcon />
+                                </Callout.Icon>
+                                <Callout.Text>
+                                    {busNumber}
+                                </Callout.Text>
+                            </Callout.Root>
+                        </Box>
+
+                        <Box width="10%" height="64px" display="flex" justifyContent="flex-end" >
+                            <Button onClick={() => fetchBusData(579, setRealTimeBusData)} style={{ alignSelf: "flex-end" }}>
+                                <UpdateIcon />
+                            </Button>
+                        </Box>
+                    </Flex>
                 </Grid>
 
 
                 <Grid columns="1" gap="3" className="grid-80-center">
 
-                    <Text align={"left"}>往{busDepart}</Text>
-                    <Grid columns="2" gap="2" className="grid-80-center">
+
+                    <Text align={"left"}>往</Text>
+
+
+                    <Grid columns="1" gap="2" className="grid-80-center">
                         {
                             [...realtime_bus_data]
                                 .map((item, index) =>
                                     item.Direction === 0 &&
                                     (
                                         <Card key={index}>
-                                            <Text as="div">{item.StopName.Zh_tw}</Text>
-                                            {/* <Text as="div">{item.StopName.En}</Text> */}
-                                            {/* <Text as="div">{item.PlateNumb}</Text> */}
-                                            <Text as="div">{(item.EstimateTime / 60).toFixed(1)}min</Text>
+                                            <Grid columns="2">
+                                                <Text size="1" as="div">{item.StopName.Zh_tw}</Text>
+                                                <Text size="1" as="div" align={"right"}>{item.EstimateTime ? (item.EstimateTime / 60).toFixed(1) : "末班駛離"}{item.EstimateTime ? "min" : ""}</Text>
+                                            </Grid>
                                         </Card>
                                     )
                                 )
                         }
                     </Grid>
 
-                    <Text align={"left"}>往{busDepart}</Text>
+                    <Text align={"left"}>返</Text>
                     {/* {busDest} */}
 
 
-                    <Grid columns="2" gap="2" className="grid-80-center">
+                    <Grid columns="1" gap="2" className="grid-80-center">
                         {
                             [...realtime_bus_data]
                                 .map((item, index) =>
                                     item.Direction === 1 &&
                                     (
                                         <Card key={index}>
-                                            <Text as="div">{item.StopName.Zh_tw}</Text>
-                                            {/* <Text as="div">{item.StopName.En}</Text> */}
-                                            {/* <Text as="div">{item.PlateNumb}</Text> */}
-                                            <Text as="div">{(item.EstimateTime / 60).toFixed(1)}min</Text>
+                                            <Grid columns="2">
+                                                <Text size="1" as="div">{item.StopName.Zh_tw}</Text>
+                                                <Text size="1" as="div" align={"right"}>{item.EstimateTime ? (item.EstimateTime / 60).toFixed(1) : "末班駛離"}{item.EstimateTime ? "min" : ""}</Text>
+                                            </Grid>
                                         </Card>
                                     )
                                 )

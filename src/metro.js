@@ -113,8 +113,9 @@ export function Metro() {
               </Flex>
             </Blockquote>
           </Grid>
-          <Grid columns="1" gap="2" className="grid-80-center">
-            <Callout.Root>
+
+          <Grid columns="1" gap="1" className="grid-80-center">
+            <Callout.Root size="1">
               <Callout.Icon>
                 <InfoCircledIcon />
               </Callout.Icon>
@@ -134,17 +135,19 @@ export function Metro() {
                   key={index}
                 >
                   <Box>
-                    <Text as="div" size="2" weight="bold">
-                      往 {item.DestinationName.substring(0, item.DestinationName.length - 1)}
-                    </Text>
+                    <Grid columns="2">
+                      <Text as="div" size="2" weight="bold">
+                        往 {item.DestinationName.substring(0, item.DestinationName.length - 1)}
+                      </Text>
+                      <Text as="div" size="2" color="gray" align={"right"}>{item.CountDown} </Text>
+                    </Grid>
                   </Box>
                   <Box>
-                    <Text as="div" size="2" color="gray">
-                      {item.CountDown}
-                    </Text>
-                    <Text as="div" color="gray" size="2">
+                    {/* <Text as="div" size="2" color="gray">
+                    </Text> */}
+                    {/* <Text as="div" color="gray" size="2">
                       {item.TrainNumber}
-                    </Text>
+                    </Text> */}
                   </Box>
                 </Card>
               ))
