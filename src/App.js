@@ -15,8 +15,8 @@ function App() {
         <Grid gap="4" className="grid-full">
           <BrandHeader></BrandHeader>
           <Grid columns="2" gap="2" className="grid-80-center">
-          <Button onClick={() => setMode(false)} variant={ Mode? "outline" : "classic"} color='Teal'>Metro</Button>
-          <Button onClick={() => setMode(true)} variant={ !Mode? "outline" : "classic"} color='ruby'>Bus</Button>
+          <Button onClick={() => setMode(true)} variant={ Mode? "outline" : "classic"} color='Teal'>Metro</Button>
+          <Button onClick={() => setMode(false)} variant={ !Mode? "outline" : "classic"} color='ruby'>Bus</Button>
           </Grid>
           {Mode?<Metro></Metro>:<Bus></Bus>}
           {/* <Metro></Metro> */}
