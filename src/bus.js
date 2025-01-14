@@ -64,9 +64,8 @@ export function Bus() {
 
 
 
-                    <Flex gap="3" width="100%">
-                        <Box width="90%" height="50px">
-                            <Callout.Root size="1" color='green' style={{ width: "100%", height: "30%" }}>
+                    <Grid columns="1" gap="2" width="100%">
+                            <Callout.Root size="1" color='green' >
                                 <Callout.Icon>
                                     <InfoCircledIcon />
                                 </Callout.Icon>
@@ -74,14 +73,12 @@ export function Bus() {
                                     {busNumber}
                                 </Callout.Text>
                             </Callout.Root>
-                        </Box>
-
-                        <Box width="10%" height="64px" display="flex" justifyContent="flex-end" >
+                        
                             <Button onClick={() => fetchBusData(579, setRealTimeBusData)} style={{ alignSelf: "flex-end" }}>
                                 <UpdateIcon />
                             </Button>
-                        </Box>
-                    </Flex>
+                        
+                    </Grid>
                 </Grid>
 
 
