@@ -4,11 +4,32 @@ import * as stationConfigs from "./stationsConfig.js"
 const api_url = "https://peggy-backend-7kg3x2vbyq-de.a.run.app/"
 export const fetchRealtimeData = (value, setRealTimeData) => {
     if (!value) return;
-    if(value=='台北101/世貿')
-        value='101';
     axios.get(`${api_url}/api/metro/${encodeURIComponent(value)}`)
         .then(response => {
             setRealTimeData(response.data);
+        })
+        .catch(error => {
+            console.log('Error fetching data:', error);
+        });
+};
+
+export const fetchBusData = (busNumber, setRealTimeData) => {
+    if (!busNumber) return;
+    axios.get(`https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/${busNumber}?%24top=100&%24format=JSON`)
+        .then(response => {
+            setRealTimeData(response.data);
+        })
+        .catch(error => {
+            console.log('Error fetching data:', error);
+        });
+};
+
+export const fetchBusInfo = (busNumber, setBusInfo) => {
+    if (!busNumber) return;
+    axios.get(`https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/${busNumber}?%24top=100&%24format=JSON`)
+        .then(response => {
+            setBusInfo(response.data[4].StopName.Zh_tw);
+            
         })
         .catch(error => {
             console.log('Error fetching data:', error);
@@ -30,7 +51,7 @@ export const findStationRoute = (stationName) => {
     }
     else if (stationConfigs.BrownLine.includes(stationName)) {
         return "Brown";
-    }else if (stationConfigs.BrownLine.includes(stationName)) {
+    } else if (stationConfigs.BrownLine.includes(stationName)) {
         return "Brown";
     }
     else if (stationConfigs.YellowLine.includes(stationName)) {
@@ -43,7 +64,7 @@ export const requestLocationPermission = (handleStationChange, handleRouteChange
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setlocation(`${position.coords.latitude},${position.coords.longitude}`);
-                localStorage.setItem('location',`${position.coords.latitude},${position.coords.longitude}`);
+                localStorage.setItem('location', `${position.coords.latitude},${position.coords.longitude}`);
                 axios.get(`${api_url}/api/location/${encodeURIComponent(location)}`)
                     .then(response => {
                         handleStationChange(response.data);
