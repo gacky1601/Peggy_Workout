@@ -13,15 +13,57 @@ export const fetchRealtimeData = (value, setRealTimeData) => {
         });
 };
 
-export const fetchBusData = (busNumber, setRealTimeData) => {
+
+const getToken = async () => {
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
+
+    const data = new URLSearchParams();
+    data.append('grant_type', 'client_credentials');
+    data.append('client_id', clientId);
+    data.append('client_secret', clientSecret);
+    
+    // console.log("data:",clientId,clientId);
+    try {
+        const response = await axios.post(
+            'https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token',
+            data,
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            }
+        );
+
+        const token = response.data.access_token;
+        console.log(token)
+        return {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json',
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching token:', error);
+        throw error;
+    }
+};
+
+
+
+export const fetchBusData = async (busNumber, setRealTimeData) => {
     if (!busNumber) return;
-    axios.get(`https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/${busNumber}?%24top=100&%24format=JSON`)
-        .then(response => {
-            setRealTimeData(response.data);
-        })
-        .catch(error => {
-            console.log('Error fetching data:', error);
-        });
+
+    try {
+        const tokenHeaders = await getToken();
+        const response = await axios.get(
+            `https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/${busNumber}?%24top=100&%24format=JSON`,
+            tokenHeaders
+        );
+        setRealTimeData(response.data);
+    } catch (error) {
+        console.log('Error fetching data:', error);
+    }
 };
 
 export const fetchBusInfo = (busNumber, setBusInfo) => {
